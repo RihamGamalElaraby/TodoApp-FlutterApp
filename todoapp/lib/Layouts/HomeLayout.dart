@@ -7,7 +7,7 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 7, 117, 5),
+        backgroundColor: Color.fromARGB(255, 241, 179, 217),
         // leading: ,
         title: Center(
             child: const Text(
@@ -25,7 +25,13 @@ class HomeLayout extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          // type: ,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 0,
+          onTap: (index) {
+            print(index);
+          },
+          backgroundColor: Colors.grey,
+          elevation: 15.0,
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Tasks'),
             BottomNavigationBarItem(
