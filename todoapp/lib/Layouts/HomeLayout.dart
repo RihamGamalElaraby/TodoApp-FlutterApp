@@ -18,9 +18,11 @@ class _HomeLayoutState extends State<HomeLayout> {
     FinishedScreen(),
     ArchivedScreen(),
   ];
-
   List<String> Titles = ['Tasks Screen', 'Finished Screen', 'Archived Screen'];
-
+  late Database database;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isBottomSheetShown = false;
+  IconData fabIcon = Icons.edit;
   @override
   void initState() {
     // TODO: implement initState
@@ -30,6 +32,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 241, 179, 217),
         title: Center(
@@ -43,10 +46,26 @@ class _HomeLayoutState extends State<HomeLayout> {
       ),
       body: screens[CurrentIndex],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-        ),
+        onPressed: () {
+          if (isBottomSheetShown) {
+            Navigator.pop(context);
+            isBottomSheetShown = false;
+            setState(() {
+              fabIcon = Icons.edit;
+            });
+          } else {
+            scaffoldKey.currentState!.showBottomSheet((context) => Container(
+                  width: double.infinity,
+                  height: 120.0,
+                  color: Colors.red,
+                ));
+            isBottomSheetShown = true;
+            setState(() {
+              fabIcon = Icons.add;
+            });
+          }
+        },
+        child: Icon(fabIcon),
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -70,7 +89,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
 
   void CreateDataBase() async {
-    var database = await openDatabase('todo.db', version: 1,
+    database = await openDatabase('todo.db', version: 1,
         onCreate: (database, version) {
       print('databasecreated');
       database
@@ -86,7 +105,19 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
   }
 
-  void InserttoDataBase() {}
+  void InserttoDataBase() async {
+    await database.transaction((txn) async {
+      txn
+          .rawInsert(
+              'INSERT INTO tasks (title, date, time, status) VALUES("First task", "011", "dd", "hi")')
+          .then((value) {
+        print('$value inserted done');
+      }).catchError((error) {
+        print('Error while inserting: ${error.toString()}');
+      });
+    });
+  }
+
   void DeleteFromDataBase() {}
   void UpdateDatabase() {}
 }
