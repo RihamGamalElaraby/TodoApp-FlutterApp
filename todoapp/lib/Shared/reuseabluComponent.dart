@@ -11,7 +11,7 @@ Widget buildTaskItem(Map model) => Padding(
             radius: 40.0,
             child: Text('${model['time']}'),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20.0,
           ),
           Column(
@@ -19,14 +19,14 @@ Widget buildTaskItem(Map model) => Padding(
             children: [
               Text(
                 '${model['title']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 '${model['Date']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
                 ),

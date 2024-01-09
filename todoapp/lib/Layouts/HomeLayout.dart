@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/Screens/ArchivedScreen.dart';
@@ -22,9 +21,9 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   int CurrentIndex = 0;
   List<Widget> screens = [
-    TaskScreen(),
-    FinishedScreen(),
-    ArchivedScreen(),
+    const TaskScreen(),
+    const FinishedScreen(),
+    const ArchivedScreen(),
   ];
   List<String> Titles = ['Tasks Screen', 'Finished Screen', 'Archived Screen'];
   late Database database;
@@ -40,22 +39,23 @@ class _HomeLayoutState extends State<HomeLayout> {
     CreateDataBase();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 241, 179, 217),
+        backgroundColor: const Color.fromARGB(255, 241, 179, 217),
         title: Center(
             child: Text(
           Titles[CurrentIndex],
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white,
               fontFamily: AutofillHints.creditCardGivenName,
               fontStyle: FontStyle.italic),
         )),
       ),
-      body: tasks.length == 0
-          ? Center(child: LinearProgressIndicator())
+      body: tasks.isEmpty
+          ? const Center(child: LinearProgressIndicator())
           : screens[CurrentIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -83,10 +83,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                 .showBottomSheet(
                   elevation: 40,
                   (context) => Container(
-                    color: Color.fromARGB(255, 245, 207, 230),
-                    padding: EdgeInsets.all(20.0),
+                    color: const Color.fromARGB(255, 245, 207, 230),
+                    padding: const EdgeInsets.all(20.0),
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: SingleChildScrollView(
                         child: Form(
                           key: formKey,
@@ -98,7 +98,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 onTap: () {
                                   print('titletapped');
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     icon: Icon(Icons.title),
                                     labelText: "Enter Title",
                                     hintText: "Title"),
@@ -111,14 +111,14 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextFormField(
                                 onTap: () {
                                   print('Describtiontapped');
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     icon: Icon(Icons.description),
                                     labelText: "Enter Describtion",
                                     hintText: "Describtion"),
@@ -131,7 +131,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextFormField(
@@ -145,7 +145,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                         value!.format(context).toString();
                                   });
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     icon: Icon(Icons.watch),
                                     labelText: "Enter Time",
                                     hintText: "Time"),
@@ -158,7 +158,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextFormField(
@@ -173,7 +173,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                         DateFormat.yMMMd().format(value!);
                                   });
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     icon: Icon(Icons.date_range),
                                     labelText: "Enter Data",
                                     hintText: "Date"),
@@ -219,7 +219,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           },
           backgroundColor: Colors.grey,
           elevation: 15.0,
-          items: [
+          items: const [
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Tasks'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.checklist), label: 'Finished'),

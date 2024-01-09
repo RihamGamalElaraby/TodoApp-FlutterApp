@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/Layouts/HomeLayout.dart';
+import 'package:bloc/bloc.dart';
+import 'Shared/blocObserver.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -15,9 +19,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Color.fromARGB(255, 241, 179, 217)),
+              seedColor: const Color.fromARGB(255, 241, 179, 217)),
           useMaterial3: true,
         ),
-        home: HomeLayout());
+        home: const HomeLayout());
   }
 }
