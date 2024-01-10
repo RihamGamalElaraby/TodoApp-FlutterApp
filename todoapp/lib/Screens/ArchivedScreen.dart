@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todoapp/Shared/Cubit/states.dart';
+import 'package:todoapp/Shared/reuseabluComponent.dart';
+import 'package:todoapp/Shared/globalVariables.dart';
+import 'package:todoapp/Shared/Cubit/cubit.dart';
+import 'package:todoapp/Shared/Cubit/states.dart';
 
 class ArchivedScreen extends StatelessWidget {
   const ArchivedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: Text(
-      'Archived',
-      style: TextStyle(fontSize: 20, color: Colors.black),
-    ));
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var tasks = AppCubit.get(context).archivedTasks;
+        return ListView.separated(
+          itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
+          separatorBuilder: (context, index) => Container(
+            width: double.infinity,
+            height: 1.0,
+            color: Colors.grey,
+          ),
+          itemCount: tasks.length,
+        );
+      },
+    );
   }
 }
