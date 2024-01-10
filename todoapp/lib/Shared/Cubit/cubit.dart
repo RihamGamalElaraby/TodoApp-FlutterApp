@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoapp/Shared/Cubit/states.dart';
 import 'package:todoapp/Screens/ArchivedScreen.dart';
@@ -20,9 +19,9 @@ class AppCubit extends Cubit<AppStates> {
   bool isBottomSheetShown = false;
   IconData fabIcon = Icons.edit;
   List<Widget> screens = [
-    TaskScreen(),
-    FinishedScreen(),
-    ArchivedScreen(),
+    const TaskScreen(),
+    const FinishedScreen(),
+    const ArchivedScreen(),
   ];
   List<String> Titles = ['Tasks Screen', 'Finished Screen', 'Archived Screen'];
 
@@ -105,7 +104,7 @@ class AppCubit extends Cubit<AppStates> {
     required int id,
   }) {
     database.rawUpdate('UPDATE tasks SET status = ? WHERE id = ?',
-        ['$status', '$id']).then((value) {
+        [status, '$id']).then((value) {
       getData(database);
       emit(AppUpdateDatabase());
     });

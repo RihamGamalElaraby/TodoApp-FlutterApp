@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoapp/Shared/Cubit/states.dart';
 import 'package:todoapp/Shared/reuseabluComponent.dart';
-import 'package:todoapp/Shared/globalVariables.dart';
 import 'package:todoapp/Shared/Cubit/cubit.dart';
-import 'package:todoapp/Shared/Cubit/states.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -15,15 +13,7 @@ class TaskScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var tasks = AppCubit.get(context).newTasks;
-        return ListView.separated(
-          itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
-          separatorBuilder: (context, index) => Container(
-            width: double.infinity,
-            height: 1.0,
-            color: Colors.grey,
-          ),
-          itemCount: tasks.length,
-        );
+        return taskbuilder(tasks: tasks);
       },
     );
   }

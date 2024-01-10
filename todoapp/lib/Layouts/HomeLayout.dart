@@ -1,11 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:todoapp/Shared/Cubit/cubit.dart';
 import 'package:todoapp/Shared/Cubit/states.dart';
-import 'package:todoapp/Shared/globalVariables.dart';
 
 class HomeLayout extends StatelessWidget {
   var titleContoller = TextEditingController();
@@ -14,6 +12,8 @@ class HomeLayout extends StatelessWidget {
   var statusContoller = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  HomeLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +29,20 @@ class HomeLayout extends StatelessWidget {
           return Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 241, 179, 217),
+              backgroundColor: const Color.fromARGB(255, 241, 179, 217),
               title: Center(
                   child: Text(
                 cubit.Titles[cubit.CurrentIndex],
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontFamily: AutofillHints.creditCardGivenName,
                     fontStyle: FontStyle.italic),
               )),
             ),
             body: ConditionalBuilder(
-              condition: !(AppStates is AppGetDatabaseLoadingState),
+              condition: AppStates is! AppGetDatabaseLoadingState,
               builder: (context) => cubit.screens[cubit.CurrentIndex],
-              fallback: (context) => Center(
+              fallback: (context) => const Center(
                 child: LinearProgressIndicator(),
               ),
             ),
@@ -61,10 +61,10 @@ class HomeLayout extends StatelessWidget {
                       .showBottomSheet(
                         elevation: 40,
                         (context) => Container(
-                          color: Color.fromARGB(255, 245, 207, 230),
-                          padding: EdgeInsets.all(20.0),
+                          color: const Color.fromARGB(255, 245, 207, 230),
+                          padding: const EdgeInsets.all(20.0),
                           child: Padding(
-                            padding: EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(20.0),
                             child: SingleChildScrollView(
                               child: Form(
                                 key: formKey,
@@ -76,7 +76,7 @@ class HomeLayout extends StatelessWidget {
                                       onTap: () {
                                         print('titletapped');
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           icon: Icon(Icons.title),
                                           labelText: "Enter Title",
                                           hintText: "Title"),
@@ -89,7 +89,7 @@ class HomeLayout extends StatelessWidget {
                                         return null;
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     // TextFormField(
@@ -109,7 +109,7 @@ class HomeLayout extends StatelessWidget {
                                     //     return null;
                                     //   },
                                     // ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     TextFormField(
@@ -123,7 +123,7 @@ class HomeLayout extends StatelessWidget {
                                               value!.format(context).toString();
                                         });
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           icon: Icon(Icons.watch),
                                           labelText: "Enter Time",
                                           hintText: "Time"),
@@ -136,7 +136,7 @@ class HomeLayout extends StatelessWidget {
                                         return null;
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     TextFormField(
@@ -152,7 +152,7 @@ class HomeLayout extends StatelessWidget {
                                               DateFormat.yMMMd().format(value!);
                                         });
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           icon: Icon(Icons.date_range),
                                           labelText: "Enter Data",
                                           hintText: "Date"),
@@ -194,7 +194,7 @@ class HomeLayout extends StatelessWidget {
                 },
                 backgroundColor: Colors.grey,
                 elevation: 15.0,
-                items: [
+                items: const [
                   BottomNavigationBarItem(
                       icon: Icon(Icons.menu), label: 'Tasks'),
                   BottomNavigationBarItem(
