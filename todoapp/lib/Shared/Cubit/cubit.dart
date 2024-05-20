@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todoapp/Shared/Cubit/states.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/Screens/ArchivedScreen.dart';
 import 'package:todoapp/Screens/FinishedScreen.dart';
 import 'package:todoapp/Screens/TaskScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:todoapp/Shared/Cubit/states.dart';
 
 class AppCubit extends Cubit<AppStates> {
   List<Map> newTasks = [];
@@ -25,6 +25,13 @@ class AppCubit extends Cubit<AppStates> {
   ];
   List<String> Titles = ['Tasks Screen', 'Finished Screen', 'Archived Screen'];
 
+  bool isDark = false;
+
+  void toggleTheme() {
+    isDark = !isDark;
+    emit(AppChangeThemeState());
+  }
+
   void changeIndex(int index) {
     CurrentIndex = index;
     emit(AppChangeBottomNaVbar());
@@ -36,7 +43,6 @@ class AppCubit extends Cubit<AppStates> {
   }) {
     isBottomSheetShown = isShow;
     fabIcon = Icon;
-
     emit(AppChangeBottomSheetChange());
   }
 
@@ -53,7 +59,6 @@ class AppCubit extends Cubit<AppStates> {
       });
     }, onOpen: (database) {
       getData(database);
-
       print('databaseopened');
     }).then((value) {
       database = value;
@@ -73,10 +78,10 @@ class AppCubit extends Cubit<AppStates> {
           newTasks.add(element);
         } else if (element['status'] == 'done') {
           doneTasks.add(element);
-        } else
+        } else {
           archivedTasks.add(element);
+        }
       });
-
       emit(AppGetDatabase());
     });
   }

@@ -1,28 +1,36 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todoapp/Layouts/HomeLayout.dart';
+import 'package:todoapp/theme/themes.dart';
 
 import 'Shared/Cubit/blocObserver.dart';
+import 'Shared/Cubit/cubit.dart';
+import 'Shared/Cubit/states.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 241, 179, 217)),
-          useMaterial3: true,
-        ),
-        home: HomeLayout());
+    return BlocProvider(
+      create: (context) => AppCubit()..CreateDataBase(),
+      child: BlocBuilder<AppCubit, AppStates>(
+        builder: (context, state) {
+          var cubit = AppCubit.get(context);
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: buildLightTheme(),
+            darkTheme: buildDarkTheme(),
+            themeMode: cubit.isDark ? ThemeMode.dark : ThemeMode.light,
+            home: HomeLayout(),
+          );
+        },
+      ),
+    );
   }
 }
