@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todoapp/Shared/Cubit/states.dart';
-import 'package:todoapp/Shared/reuseabluComponent.dart';
 import 'package:todoapp/Shared/Cubit/cubit.dart';
+import 'package:todoapp/Shared/Cubit/states.dart';
+import 'package:todoapp/widgets/taskBuilder.dart';
 
 class FinishedScreen extends StatelessWidget {
   const FinishedScreen({super.key});
